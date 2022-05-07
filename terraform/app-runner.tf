@@ -1,6 +1,8 @@
 resource "aws_apprunner_service" "this" {
   service_name = var.name
 
+  auto_scaling_configuration_arn = aws_apprunner_auto_scaling_configuration_version.this.arn
+
   source_configuration {
     # It's annoying to pay $1/month.
     auto_deployments_enabled = false
@@ -23,6 +25,15 @@ resource "aws_apprunner_service" "this" {
       access_role_arn = aws_iam_role.app_runner_pull_ecr.arn
     }
   }
+}
+
+resource "aws_apprunner_auto_scaling_configuration_version" "this" {
+  auto_scaling_configuration_name = var.name
+
+  # 動作確認のために少なく設定している
+  max_concurrency = 5
+  max_size        = 2
+  min_size        = 1
 }
 
 resource "aws_iam_role" "app_runner_pull_ecr" {
