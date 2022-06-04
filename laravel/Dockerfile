@@ -16,7 +16,7 @@ RUN yarn production
 # For app-runner
 # https://learn2torials.com/a/laravel8-production-docker-image
 # https://gitlab.com/learn2torials/laravel8-docker
-FROM php:8.1-rc-fpm AS laravel-app-runner
+FROM php:8.1-fpm AS laravel-app-runner
 
 # Set working directory
 WORKDIR /var/www
